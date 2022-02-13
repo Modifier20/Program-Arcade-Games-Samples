@@ -1,21 +1,27 @@
 import pygame
 
 # --- Defined Colours ---
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-GREEN = (0, 255, 0)
-RED = (255, 0, 0)
+black = (0, 0, 0)
+white = (255, 255, 255)
+green = (0, 255, 0)
+red = (255, 0, 0)
 
-pygame.init()                                           # Initalizes PyGame
+pygame.init()                                               # Initalizes PyGame
 
-size = (700, 500)                                       # Determines the Size of the PyGame Window
-screen = pygame.display.set_mode(size)                  # Creates PyGame Window.
+size = (700, 500)                                           # Determines the Size of the PyGame Window
+screen = pygame.display.set_mode(size)                      # Creates PyGame Window.
 
-pygame.display.set_caption("Bouncing Rectangle")        # Set's The Title of The PyGame Window.
+pygame.display.set_caption("Bouncing Rectangle")            # Set's The Title of The PyGame Window.
 
-done = False                                            # Loops Until The User Clicks
+done = False                                                # Loops Until The User Clicks
 
-clock = pygame.time.Clock()                             # Manages How Fast The Screen Updates.
+clock = pygame.time.Clock()                                 # Manages How Fast The Screen Updates.
+
+# --- Main Program Variables ---
+rect_x = 50                                                 # Position of Rectangle
+rect_y = 50
+rect_change_x = 5                                           # Vector Direction and Speed
+rect_change_y = 3
 
 # --- Main Program Loop ---
 while not done:
@@ -25,10 +31,23 @@ while not done:
         if event.type == pygame.QUIT:
             done = True
 
-        screen.fill(WHITE)                              # Fills The Background With White
+    screen.fill(black)                                      # Fills The Background With White
 
-        pygame.display.flip()                           # Updates The Screen With What We've Drawn
+    # --- Game Logic ---
+    rect_x += rect_change_x
+    rect_y += rect_change_y
 
-        clock.tick(60)                                  # Limits The FPS to 60
+    if rect_x > 649 or rect_x < 0:
+        rect_change_x *= -1
+    if rect_y > 449 or rect_y < 0:
+        rect_change_y *= -1
+
+    # --- Game Drawing ---
+    pygame.draw.rect(screen, white, [rect_x,rect_y,50,50])
+    
+
+    pygame.display.flip()                                   # Updates The Screen With What We've Drawn
+
+    clock.tick(20)                                          # Limits The FPS
 
 pygame.quit()
